@@ -1,0 +1,63 @@
+﻿@model ApplicantInformationCreateVM
+
+<link rel="stylesheet" href="~/css/custom.css">
+
+<form class="mt-2" asp-action="CreateReference" method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All"></div>
+
+    @if (@TempData["ExistingUserName"] is not null)
+    {
+        <div id="existingUser">
+            <h3>Merhaba</h3>
+            <h3>@TempData["ExistingUserName"]</h3>
+            <h4>Kaldığın yerden devam et</h4>
+        </div>
+    }
+    @if (ViewBag.ReferenceMessage is not null)
+    {
+        <p class="text-danger">ViewBag.ReferenceMessage</p>
+        <a asp-action="Index" class="btn text-dark" style="float:right">Ana Sayfaya Dön</a>
+    }
+    
+    <h3>Adım 2</h3>
+
+    <!-- Açıklama Alanı -->
+    <div class="form-group">
+        <label for="Description">Açıklama</label>
+        <textarea class="form-control" asp-for="Description" placeholder="Açıklama" maxlength="4000"></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
+    <!-- PDF Dosyası Alanı -->
+    <div class="form-group">
+        <label for="PdfFile">PDF Dosyası</label>
+        <input type="file" class="form-control" id="fileInput3" name="PdfFile" accept=".pdf" required>
+        <span class="text-danger" asp-validation-for="PdfFile"></span>
+    </div>
+
+    <!-- Birinci Fotoğraf Alanı -->
+    <div class="form-group">
+        <label for="FirstPhoto">Birinci Fotoğraf</label>
+        <input type="file" class="form-control" id="fileInput1" name="FirstPhoto" accept=".jpg, .jpeg, .png" required>
+        <span class="text-danger" asp-validation-for="FirstPhoto"></span>
+    </div>
+    <div class="form-group image-preview" style="text-align:center">
+        <img id="previewImage1" src="#" alt="Birinci Fotoğraf Önizleme" style="max-width:200px;">
+    </div>
+
+    <!-- İkinci Fotoğraf Alanı -->
+    <div class="form-group">
+        <label for="SecondPhoto">İkinci Fotoğraf</label>
+        <input type="file" class="form-control" id="fileInput2" name="SecondPhoto" accept=".jpg, .jpeg, .png" required>
+        <span class="text-danger" asp-validation-for="SecondPhoto"></span>
+    </div>
+    <div class="form-group image-preview" style="text-align:center">
+        <img id="previewImage2" src="#" alt="İkinci Fotoğraf Önizleme" style="max-width:200px;">
+    </div>
+
+    <button type="reset" class="btn text-dark">Temizle</button>
+    <button type="submit" class="btn text-dark" style="float:right">Gönder</button>
+</form>
+
+

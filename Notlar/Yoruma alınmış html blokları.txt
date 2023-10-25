@@ -1,0 +1,182 @@
+*****************************************************Applayout geliþtirme***************************************************
+
+--------------------------------------navbar hamburger ve yönetici giriþi butonu-------------------------------------------- 
+@* <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+        <div class="nav-item dropdown">
+            <button class="btn btn-primary py-4 px-lg-5 d-block d-lg-none" data-target="#Modal2" data-toggle="modal" id="adminLoginButton">Yönetici Giriþi<i class="fa fa-arrow-right ms-3"></i></button>
+        </div>
+    </div>
+</div>
+<button class="btn btn-primary py-4 px-lg-5 d-none d-lg-block" data-target="#Modal2" data-toggle="modal">Yönetici Giriþi<i class="fa fa-arrow-right ms-3"></i></button> *@
+
+-------------------------------Home index admin giriþ modal formu ----------------------------------------------------------
+
+<div class="modal" id="Modal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Yönetici Giriþi</h2>
+            </div>
+            <form id="loginForm">
+                <div class="modal-body">
+                    <label for="UserName">Kullanýcý Adý</label>
+                    <br />
+                    <input type="text" class="form-control" id="UserName" name="UserName" />
+                    <br />
+                    <label for="Password">Þifre</label>
+                    <br />
+                    <input type="password" class="form-control" id="Password" name="Password" />
+                    <br />
+                    <span class="text-danger" id="validationError"></span>
+                    <br />
+                    <button type="button" class="btn btn-success" style="width: 100%;" id="loginButton">Giriþ <i class="fa-solid fa-circle-notch fa-spin" style="color: #ffffff; display:none"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+--------------------------------Yönetici giriþ tuþu atlayabilmek için jquery------------------------------------------------
+
+$(document).ready(function () {
+            $("#adminLoginButton").click(function () {
+                var isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
+                var isAdminOrSuperAdmin = @User.IsInRole("Admin").ToString().ToLower() || @User.IsInRole("SuperAdmin").ToString().ToLower();
+                $("#Modal2").modal("hide");
+                if (isAuthenticated && isAdminOrSuperAdmin) {
+                    window.location.href = "/Admin/Index";
+                } else {
+                    $("#Modal2").modal("show");
+                }
+            });
+        });
+
+---------------------------------Yönetici giriþ modal için yazýlmýþ ajax----------------------------------------------------
+
+$(document).ready(function () {
+            $("#loginButton").click(function () {
+                var userName = $("#UserName").val();
+                var password = $("#Password").val();
+
+                var data = {
+                    UserName: userName,
+                    Password: password
+                };
+
+                $("#validationError").text("");
+
+                $("#loginButton i.fa-circle-notch").show();
+
+                $.ajax({
+                    url: "/Login/AdminLogin",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        
+                        window.location.href = "/Admin/Index";
+                    },
+                    error: function (xhr, status, error) {
+                        var errorMessage = xhr.responseJSON ? xhr.responseJSON : "Bir hata oluþtu.";
+                        var errorMessages = errorMessage.value.split("!");
+                        errorMessages.forEach(function (message) {
+                            $("#validationError").append(message.trim() + "<br>");
+                        });
+                    },
+                    complete: function () {
+                        $("#loginButton i.fa-circle-notch").hide();
+                    }
+                });
+            });
+        });
+
+--------------------------------Ýleri geri butonu--------------------------------------------------------------------------
+
+$(document).ready(function () {
+            $("#nextButton").click(function (e) {
+                e.preventDefault();
+                $("#formStep1").hide();
+                $("#formStep2").show();
+            });
+
+            $("#previousButton").click(function (e) {
+                e.preventDefault();
+                $("#formStep2").hide();
+                $("#formStep1").show();
+            });
+
+            $("#submitButton").click(function () {
+            });
+        });
+
+---------------------------------Tüm form için jquery ajax------------------------------------------------------------------
+
+$(document).ready(function () {
+            $("#CreateReferenceForm").submit(function (e) {
+                e.preventDefault(); 
+
+                
+                let formData = new FormData(this);
+
+                
+                $("#validationError").text("");
+
+                
+                $("#submitButton").prop("disabled", true);
+                $("#submitButton i.fa-circle-notch").show();
+
+                $.ajax({
+                    url: "/Home/CreateReference", 
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            $("#validationError").text(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                        console.error(error);
+                    },
+                    complete: function () {
+                        $("#submitButton").prop("disabled", false);
+                        $("#submitButton i.fa-circle-notch").hide();
+                    }
+                });
+            });
+        });
+-------------------------------------------spinner--------------------------------------------------------------------------
+ <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Yükleniyor...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+---------------------------------------------------iconlar------------------------------------------------------------------
+<i class="fa fa-book me-3"></i>
+
+
+**********************************************_AppLayout********************************************************************
+
+--------------------------------------------header search button------------------------------------------------------------
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+                        <i class="material-icons">search</i>
+                    </label>
+
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search" />
+                        <label class="mdl-textfield__label" for="search">Enter your query...</label>
+                    </div>
+                </div>

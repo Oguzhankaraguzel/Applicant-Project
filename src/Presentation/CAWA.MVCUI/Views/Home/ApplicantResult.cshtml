@@ -1,0 +1,71 @@
+﻿@model ApplicantInformationResultVM
+
+<link rel="stylesheet" href="~/css/custom.css">
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Sol Tarafta Bilgiler ve Yazılar -->
+        <div class="col-md-12 text-center text-light bg-dark bg-gradient mb-2">
+            <h3 class="text-light">BAŞVURU SONUCU</h3>
+            @if (Model.ApprovalStatus == CAWA.Domain.Enums.ApprovalStatus.Sent)
+            {
+                <h4>İnceleniyor <i class="fa-solid fa-rotate fa-spin" style="color: #ffffff;"></i></h4>
+                <p>Başvurunuz henüz inceleniyor. Lütfen bekleyiniz</p>
+                <p>Dilerseniz daha sonra tekrar kontrol edebilirsiniz.</p>
+            }
+            else if (Model.ApprovalStatus == CAWA.Domain.Enums.ApprovalStatus.Approved)
+            {
+                <h4 class="text-success">Başvurunuz onaylandı.<i class="fa-solid fa-check-double" style="color: #00ff00;"></i></h4>
+                @if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <p class="text-success">@Model.Message </p>
+                }
+            }
+            else if (Model.ApprovalStatus == CAWA.Domain.Enums.ApprovalStatus.Denied)
+            {
+                <h4 class="text-danger">Başvurunuz reddedildi.<i class="fa-regular fa-circle-xmark" style="color: #ff0000;"></i></h4>
+                @if (!string.IsNullOrEmpty(Model.Message))
+                {
+                    <p class="text-danger">@Model.Message </p>
+                }
+            }
+            <a asp-action="Index" class="btn btn-light my-3">Ana Sayfaya Dön</a>
+
+            @if (Model.Description is not null)
+            {
+                <h3 class="text-light">AÇIKLAMAM</h3>
+                <p class="text-light">@Model.Description</p>
+            }
+        </div>
+
+        <div class="col-md-12">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <img src="@Model.FirstPhotoPath" class="card-img-top" alt="Birinci Fotoğraf">
+                        <div class="card-body">
+                            <h5 class="card-title">Birinci Fotoğraf</h5>
+                            <a href="@Model.FirstPhotoPath" target="_blank" class="btn btn-outline-info w-100">Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <a href="@Model.PdfFilePath" target="_blank" class="btn btn-outline-info w-100">Dosyamı Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="card">
+                        <img src="@Model.SecondPhotoPath" class="card-img-top" alt="İkinci Fotoğraf">
+                        <div class="card-body">
+                            <h5 class="card-title">İkinci Fotoğraf</h5>
+                            <a href="@Model.SecondPhotoPath" target="_blank" class="btn btn-outline-info w-100">Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

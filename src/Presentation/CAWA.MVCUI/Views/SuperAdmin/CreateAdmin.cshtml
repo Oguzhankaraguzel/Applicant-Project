@@ -1,0 +1,144 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+@model AdminCreateVM
+
+<div class="mdl-grid mdl-cell mdl-cell--9-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone mdl-cell--top">
+    <div class="mdl-card__supporting-text">
+        <form asp-action="CreateAdmin" method="post" class="form" enctype="multipart/form-data">
+            <div class="form__article">
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--file">
+                        @if (ViewBag.ErrorMessages != null)
+                        {
+                            <ul>
+                                @foreach (var errorMessage in ViewBag.ErrorMessages)
+                                {
+                                    <li>@errorMessage</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+
+                <h3>Kişisel Bilgiler</h3>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--file">
+                        <label for="profilePhotoInput" class="mdl-button mdl-button--icon mdl-button--file">
+                            <i class="material-icons">attach_file</i>
+                        </label>
+                        <input class="mdl-textfield__input" type="file" id="profilePhotoInput" asp-for="ProfilePhoto" onchange="previewImage(this)" style="display: none;">
+                        <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="profilePhotoInput">Profil Resmi</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col">
+                        <img id="imagePreview" src="#" alt="Profile Photo Preview" style="display:none; max-width: 100%;" />
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" asp-for="Name" required min="3" max="50" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="firstName">İlk Adı</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" asp-for="SirName" required min="3" max="50" />
+                        <span asp-validation-for="SirName" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="sirName">Soy Adı</label>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label class="mdl-textfield__label" for="birthDate">Doğum Tarihi</label>
+                        <input class="mdl-textfield__input" asp-for="BirthDate" type="date" required pattern="\d{2}/\d{2}/\d{4}" placeholder="GG/AA/YYYY" />
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form__article">
+                <h3>İletişim Bilgileri</h3>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" asp-for="PhoneNumber" required />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="phoneNumber">Telefon Numarası</label>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" asp-for="Email" required autocomplete="off" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="email">Email adresi</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form__article">
+                <h3>Yönetici Bilgileri</h3>
+
+                <div class="mdl-grid">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                        <select class="mdl-textfield__input" id="isSuperAdmin" name="isSuperAdmin" asp-for="IsSuperAdmin" required>
+                            <option value="false" selected>Hayır</option>
+                            <option value="true">Evet</option>
+                        </select>
+                        <label class="mdl-textfield__label" for="isSuperAdmin">Üst Düzey Yönetici?</label>
+                    </div>
+                </div>
+
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" asp-for="inviterName" />
+                        <span asp-validation-for="inviterName" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="inviterName">inviterName (Davet Edici Adı)</label>
+                        <p style="color: #aaa; margin-top: 8px;">(Eğer kullanıcının davet edeceği ismi boş bırakırsanız, Rastgele oluşturulacak olan kullanıcı adı, davet eden adı olarak kullanılacaktır. Örnek: www.websites.com?invitername=ahmet123)</p>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" asp-for="Password" autocomplete="off" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="Password">Password</label>
+                    </div>
+                </div>
+            </div>
+            <!-- Diğer form alanlarını ekleyin -->
+
+            <div class="form__action">
+                <button id="submit_button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function previewImage(input) {
+        var imagePreview = document.getElementById('imagePreview');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            imagePreview.src = '#';
+            imagePreview.style.display = 'none';
+        }
+    }
+</script>

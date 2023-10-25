@@ -1,0 +1,264 @@
+﻿<!doctype html>
+<html lang="tr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="icon" type="image/png" href="~/img/favicon.png">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="CAWA YÖNETİCİ PANELİ">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CAWA YÖNETİCİ PANELİ</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+
+    <meta name="msapplication-TileImage" content="img/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,100,700,900' rel='stylesheet'
+          type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/lib/getmdl-select.min.css">
+    <link rel="stylesheet" href="~/css/lib/nv.d3.min.css">
+    <link rel="stylesheet" href="~/css/application.min.css">
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header is-small-screen">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                CAWA YÖNETİCİ PANELİ
+                <div class="mdl-layout-spacer"></div>
+
+                <div class="avatar-dropdown" id="icon">
+                    <span>@(ViewBag.Admin?.Name ?? "Misafir")</span>
+                    <img src="@((string)ViewBag.Admin?.PhotoPath ?? "/img/SiluetteUser.png")" style="max-height:30px; max-width:30px;">
+                </div>
+
+                <ul class="mdl-menu mdl-list mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp account-dropdown"
+                    for="icon">
+                    <li class="mdl-list__item mdl-list__item--two-line">
+                        <span class="mdl-list__item-primary-content">
+                            <span class="material-icons mdl-list__item-avatar">
+                                <img src="@((string)ViewBag.Admin?.PhotoPath ?? "/img/SiluetteUser.png")" style="max-height:30px; max-width:30px;">
+                            </span>
+                            <span>@User.Identity.Name</span>
+                            <span class="mdl-list__item-sub-title">@(ViewBag.Admin?.Email ?? "misafir")</span>
+                        </span>
+                    </li>
+
+                    <li class="list__item--border-top"></li>
+
+                    <a asp-action="Index" asp-controller="Admin">
+                    <li class="mdl-menu__item mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">account_circle</i>
+                            Profilim
+                        </span>
+                    </li>
+                    </a>
+
+                    <a asp-action="Index" asp-controller="Home">
+                    <li class="mdl-menu__item mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">home</i>
+                            Ana Sayfa
+                        </span>
+                    </li>
+                    </a>
+
+                    <li class="list__item--border-top"></li>
+
+                    <a asp-action="LogOut" asp-controller="Account">
+                    <li class="mdl-menu__item mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon text-color--secondary">exit_to_app</i>
+                            Çıkış Yap
+                        </span>
+                    </li>
+                    </a>
+
+                </ul>
+
+                <button id="more"
+                        class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">more_vert</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp settings-dropdown"
+                    for="more">
+                    <a asp-action="AllApplicantList" asp-controller="Admin">
+                    <li class="mdl-menu__item">
+                        Tüm Başvurular
+                    </li>
+                    </a>
+                    <a asp-action="PendingApplicantList" asp-controller="Admin">
+                    <li class="mdl-menu__item">
+                        Bekleyen
+                    </li>
+                    </a>
+                    <a asp-action="ApprovedApplicantList" asp-controller="Admin">
+                    <li class="mdl-menu__item">
+                        Onaylanan
+                    </li>
+                    </a>
+                    <a asp-action="DeniedApplicantList" asp-controller="Admin">
+                    <li class="mdl-menu__item">
+                        Reddedilen
+                    </li>
+                    </a>
+                </ul>
+            </div>
+        </header>
+
+        <div class="mdl-layout__drawer">
+            <header><img src="~/img/baslık.png" style="max-width:60px; max-height:60px;" /> CAWA</header>
+            <div class="scroll__wrapper" id="scroll__wrapper">
+                <div class="scroller" id="scroller">
+                    <div class="scroll__container" id="scroll__container">
+                        <nav class="mdl-navigation">
+                            <a class="mdl-navigation__link" asp-action="Index" asp-controller="Admin">
+                                <i class="material-icons" role="presentation">person</i>
+                                Profilim
+                            </a>
+                            <a class="mdl-navigation__link" asp-action="Index" asp-controller="Home">
+                                <i class="material-icons" role="presentation">home</i>
+                                Ana Sayfa
+                            </a>
+                            <div class="sub-navigation">
+                                <a class="mdl-navigation__link">
+                                    <i class="material-icons">view_comfy</i>
+                                    Başvurular
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                                <div class="mdl-navigation">
+                                    <a class="mdl-navigation__link" asp-action="PendingApplicantList" asp-controller="Admin">
+                                        Bekleyenler
+                                    </a>
+                                    <a class="mdl-navigation__link" asp-action="ApprovedApplicantList" asp-controller="Admin">
+                                        Onaylananlar
+                                    </a>
+                                    <a class="mdl-navigation__link" asp-action="DeniedApplicantList" asp-controller="Admin">
+                                        Reddedilenler
+                                    </a>
+                                    <a class="mdl-navigation__link" asp-action="AllApplicantList" asp-controller="Admin">
+                                        Hepsi
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="sub-navigation">
+                                <a class="mdl-navigation__link">
+                                    <i class="material-icons">drafts</i>
+                                    Email İşlemleri
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                                <div class="mdl-navigation">
+                                    <a class="mdl-navigation__link" asp-action="SendMail" asp-controller="Mail">
+                                        Email Gönder
+                                    </a>
+                                    <a class="mdl-navigation__link" asp-action="SendInvitationMail" asp-controller="Mail">
+                                        Davet Gönder
+                                    </a>
+                                </div>
+                            </div>
+
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <div class="sub-navigation">
+                                    <a class="mdl-navigation__link">
+                                        <i class="material-icons">supervisor_account</i>
+                                        Yöneticiler
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                    <div class="mdl-navigation">
+                                        <a class="mdl-navigation__link" asp-action="CreateAdmin" asp-controller="SuperAdmin">
+                                            Yönetici Oluştur
+                                        </a>
+                                        <a class="mdl-navigation__link" asp-action="AdminList" asp-controller="SuperAdmin">
+                                            Yönetici Listesi
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </nav>
+                    </div>
+                </div>
+                <div class='scroller__bar' id="scroller__bar"></div>
+            </div>
+        </div>
+
+        <main class="mdl-layout__content">
+            @RenderBody()
+        </main>
+
+        <footer class="footer">
+            <div style="float:right;">
+                <p>&copy; <span id="footer-year"></span> CAWA WEB UYGULAMASI. TÜM HAKLARI SAKLIDIR.</p>
+            </div>
+        </footer>
+
+
+
+    </div>
+    <script>
+        const currentYear = new Date().getFullYear();
+        document.getElementById("footer-year").textContent = currentYear;
+    </script>
+    <script src="~/js/d3.min.js"></script>
+    <script src="~/js/getmdl-select.min.js"></script>
+    <script src="~/js/material.min.js"></script>
+    <script src="~/js/nv.d3.min.js"></script>
+    <script src="~/js/layout/layout.min.js"></script>
+    <script src="~/js/scroll/scroll.min.js"></script>
+    <script src="~/js/widgets/charts/discreteBarChart.min.js"></script>
+    <script src="~/js/widgets/charts/linePlusBarChart.min.js"></script>
+    <script src="~/js/widgets/charts/stackedBarChart.min.js"></script>
+    <script src="~/js/widgets/employer-form/employer-form.min.js"></script>
+    <script src="~/js/widgets/line-chart/line-charts-nvd3.min.js"></script>
+    <script src="~/js/widgets/map/maps.min.js"></script>
+    <script src="~/js/widgets/pie-chart/pie-charts-nvd3.min.js"></script>
+    <script src="~/js/widgets/table/table.min.js"></script>
+    <script src="~/js/widgets/todo/todo.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function previewImage(input) {
+            var imagePreview = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                imagePreview.src = '#';
+                imagePreview.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#IsHtml').change(function () {
+                var content = $('#mailBody').val();
+                if ($(this).is(':checked')) {
+                    $('#previewContent').html(content);
+                } else {
+                    $('#previewContent').text(content);
+                }
+            });
+
+            $('#mailBody').on('input', function () {
+                var content = $('#mailBody').val();
+                if ($('#IsHtml').is(':checked')) {
+                    $('#previewContent').html(content);
+                } else {
+                    $('#previewContent').text(content);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

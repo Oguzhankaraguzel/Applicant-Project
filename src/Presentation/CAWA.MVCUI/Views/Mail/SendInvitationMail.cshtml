@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model InvitationMailVM
+
+<div class="mdl-grid mdl-cell mdl-cell--9-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone mdl-cell--top">
+    <div class="mdl-card__supporting-text">
+        <form asp-action="SendInvitationMail" method="post" class="form">
+            <div class="form__article">
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--file" asp-validation-summary="All">
+                        @if (TempData["MailMessage"] != null)
+                        {
+                            <p>@TempData["MailMessage"]</p>
+                        }
+                    </div>
+                </div>
+                <h2>Davet Email'i Gönder</h2>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="email" asp-for="Email" class="mdl-textfield__input" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="Email">Kime</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="text" asp-for="Subject" class="mdl-textfield__input"/>
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="Subject">Konu</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="text" asp-for="Name" class="mdl-textfield__input" required />
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                        <label class="mdl-textfield__label" for="isim_input">İsim</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="text" asp-for="Link" class="mdl-textfield__input" required />
+                        <span class="text-danger" asp-validation-for="Link"></span>
+                        <label class="mdl-textfield__label" for="link_input">Link</label>
+                    </div>
+                </div>
+
+                <div class="form__action" style="margin-top: 20px;">
+                    <button id="submit_button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">
+                        Gönder
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

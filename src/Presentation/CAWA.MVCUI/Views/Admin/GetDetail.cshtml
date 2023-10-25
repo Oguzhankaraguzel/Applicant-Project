@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model ApplicantInformationListVM
+
+<style>
+    .form__article {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form__action {
+        display: flex;
+        justify-content:space-evenly;
+    }
+
+    .responsive-image {
+        width: 300px;
+        height: auto;
+    }
+
+</style>
+
+<div class="mdl-grid mdl-cell mdl-cell--12-col">
+    <div class="mdl-card">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Başvuru Detayı</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <form asp-action="ReplyToApplicant" asp-controller="Admin" method="post" class="form">
+                <div class="form__article" style="max-width: 800px; margin: 0 auto; text-align: center;">
+
+                    <div class="mdl-grid" style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px;">
+                        <div class="mdl-cell mdl-cell--4-col">
+                            <a href="@Model.FirstPhotoPath" target="_blank">
+                                <img src="@Model.FirstPhotoPath" alt="First Photo" class="responsive-image" style="width: 100%; height: auto;" />
+                            </a>
+                        </div>
+                        <div class="mdl-cell mdl-cell--4-col">
+                            <a href="@Model.SecondPhotoPath" target="_blank">
+                                <img src="@Model.SecondPhotoPath" alt="Second Photo" class="responsive-image" style="width: 100%; height: auto;" />
+                            </a>
+                        </div>
+                        <div class="mdl-cell mdl-cell--4-col">
+                            <a href="@Model.PDFFilePath" target="_blank" style="display: flex; align-items: center; justify-content: center;">
+                                <i class="material-icons">attach_file</i> Dosyayı Görüntüle
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mdl-grid" style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="width: 100%;">AÇIKLAMA: </h3>
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <p style="width: 100%;">
+                                @Model.Description What is Lorem Ipsum?
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mdl-grid" style="margin-bottom: 20px;">
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <input type="hidden" name="Id" value="@Model.Id" />
+
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%;">
+                                <textarea class="mdl-textfield__input" type="text" id="message" name="Message" rows="3" maxlength="4000" style="width: 100%;"></textarea>
+                                <label class="mdl-textfield__label" for="message">Mesajınız</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__action" style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" name="ApprovalStatus" value="@CAWA.Domain.Enums.ApprovalStatus.Approved" type="submit" style="background-color: green; width: 150px;">
+                            Onayla
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" name="ApprovalStatus" value="@CAWA.Domain.Enums.ApprovalStatus.Denied" type="submit" style="background-color: red; width: 150px;">
+                            Reddet
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

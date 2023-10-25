@@ -1,0 +1,54 @@
+﻿@model AppUserCreateVM
+
+<link rel="stylesheet" href="~/css/custom.css">
+
+<form asp-action="CreateApplicant" method="post" class="mt-2">
+
+    @if (@ViewBag.Message is not null)
+    {
+        <p class="text-danger">@ViewBag.Message</p>
+        <a asp-action="Index" class="btn btn-outline-dark">Anasayfa</a>
+    }
+
+    <div asp-validation-summary="All"></div>
+
+    <h3>Adım 1</h3>
+
+    <!-- Ad Alanı -->
+    <div class="form-group">
+        <label for="FirstName">Adınız</label>
+        <input type="text" class="form-control" asp-for="Name" placeholder="Adınız" required minlength="3" maxlength="50">
+        <span asp-validation-for="Name" class="text-dander"></span>
+    </div>
+
+    <!-- Soyad Alanı -->
+    <div class="form-group">
+        <label for="SirName">Soyadınız</label>
+        <input type="text" class="form-control" asp-for="SirName" placeholder="Soyadınız" required minlength="3" maxlength="75">
+        <span asp-validation-for="SirName" class="text-dander"></span>
+    </div>
+
+    <!-- E-posta Alanı -->
+    <div class="form-group">
+        <label for="Email">E-posta Adresiniz</label>
+        <input type="email" class="form-control" asp-for="Email" placeholder="E-posta Adresiniz" required>
+        <span asp-validation-for="Email" class="text-dander"></span>
+    </div>
+
+    <!-- Telefon Numarası Alanı -->
+    <div class="form-group">
+        <label for="PhoneNumber">Telefon Numaranız</label>
+        <input type="tel" class="form-control" asp-for="PhoneNumber" placeholder="Telefon Numaranız" required minlength="11" maxlength="13">
+        <span asp-validation-for="PhoneNumber" class="text-dander"></span>
+    </div>
+
+    <!-- Doğum Tarihi Alanı -->
+    <div class="form-group">
+        <label for="BirthDate">Doğum Tarihiniz</label>
+        <input type="date" class="form-control" asp-for="BirthDate" required>
+        <span asp-validation-for="BirthDate" class="text-dander"></span>
+    </div>
+
+    <button type="reset" class="btn text-dark">Temizle</button>
+    <button type="submit" class="btn text-dark" style="float:right">İleri</button>
+</form>

@@ -1,0 +1,45 @@
+﻿
+body {
+    background-image: url("/img/mainPage.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+form {
+    min-width: 300px;
+    max-width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    background: #ffffff59;
+    -webkit-box-shadow: 3px 3px 23px -9px rgba(0,0,0,0.86);
+    -moz-box-shadow: 3px 3px 23px -9px rgba(0,0,0,0.86);
+    box-shadow: 3px 3px 23px -9px rgba(0,0,0,0.86);
+}
+
+    form input {
+        border: 1px solid #eee;
+        border-radius: 0 !important;
+        padding: 5px 8px;
+        color: #444;
+    }
+
+    form button {
+        color: black;
+        background: #ffffffad;
+        border: 1px solid #fff !important;
+        margin-top: 20px;
+        border-radius: 0px !important;
+    }
+
+        form button:hover {
+            background: #fff !important;
+        }
+
+label {
+    color: black;
+}
+
+.pull-right {
+    float: right;
+}

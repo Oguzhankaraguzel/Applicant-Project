@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model SendMailVM
+
+<div class="mdl-grid mdl-cell mdl-cell--9-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone mdl-cell--top">
+    <div class="mdl-card__supporting-text">
+        <form asp-action="SendMail" method="post" class="form">
+            <div class="form__article">
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--file" asp-validation-summary="All">
+                        @if (TempData["MailMessage"] != null)
+                        {
+                            <p>@TempData["MailMessage"]</p>
+                        }
+                    </div>
+                </div>
+                <h2>Email Gönder</h2>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="email" asp-for="Email" class="mdl-textfield__input" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="Email">Kime</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input type="text" asp-for="Subject" class="mdl-textfield__input" required />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="Subject">Konu</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea asp-for="Body" id="mailBody" rows="5" class="mdl-textfield__input" required></textarea>
+                        <span asp-validation-for="Body" class="text-danger"></span>
+                        <label class="mdl-textfield__label" for="Body">İçerik</label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="IsHtml">
+                            <input type="checkbox" asp-for="IsHtml" class="mdl-checkbox__input" checked />
+                            <span class="mdl-checkbox__label">HTML İçerik?</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mdl-grid" style="margin-top: 20px;">
+                    <div class="mdl-cell mdl-cell--12-col"><h4>Ön İzleme</h4></div>
+                    <div class="mdl-cell mdl-cell--12-col" id="previewContent" style="border: 1px solid #ccc; padding: 10px; font-family: Arial, sans-serif;"></div>
+                </div>
+
+                <div class="form__action" style="margin-top: 20px;">
+                    <button id="submit_button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">
+                        Gönder
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

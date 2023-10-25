@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model AdminListVM
+
+<style>
+    .profile-card {
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+        max-width: 400px;
+    }
+
+    .profile-photo-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-photo {
+        max-width: 150px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    .profile-name {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+
+    .profile-username {
+        font-style: italic;
+    }
+
+    .profile-info {
+        margin: 5px 0;
+    }
+</style>
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
+        <div class="mdl-card mdl-shadow--2dp profile-card">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Profil</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <div class="profile-photo-container">
+                    <img src="@Model.ProfilePhotoPath" alt="Profil Fotoğrafı" class="profile-photo" />
+                </div>
+                <h3 class="profile-name">@Model.FullName</h3>
+                <p class="profile-username">Kullanıcı adı: @Model.UserName</p>
+                <p class="profile-username">Davet eden adı: @Model.inviterName</p>
+                <span>www.websites.com?invitername=@Model.inviterName</span>
+                <p class="profile-info">Email: @Model.Email</p>
+                <p class="profile-info">Telefon: @Model.PhoneNumber</p>
+                <p class="profile-info">Yaş: @Model.Age</p>
+                @if (Model.UserRank == CAWA.Domain.Enums.UserRank.Site_Officer)
+                {
+                    <p class="profile-info">Üst düzey yönetici</p>
+                }
+                else
+                {
+                    <p class="profile-info">Yönetici</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

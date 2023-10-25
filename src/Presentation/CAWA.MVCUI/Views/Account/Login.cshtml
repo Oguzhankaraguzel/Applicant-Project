@@ -1,0 +1,33 @@
+﻿@model LoginVM
+
+<link rel="stylesheet" href="~/css/custom.css">
+
+<div asp-validation-summary="All">
+    @if (ViewBag.Message != null)
+    {
+        @foreach (var item in ViewBag.Message)
+        {
+            <p class="text-danger">@item</p>
+            <br />
+        }
+    }
+</div>
+
+<form asp-action="Login" asp-controller="Account" method="post" class="mt-2">
+
+    <h4 class="text-center">Giriş Yap</h4>
+
+    <div class="form-group">
+        <label for="UserName">Kullanıcı Adı</label>
+        <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Kullanıcı Adı" required>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Password">Şifre</label>
+        <input type="password" id="Password" name="Password" class="form-control" placeholder="Şifre" required minlength="8">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-success text-dark">Giriş Yap</button>
+    </div>
+</form>

@@ -1,0 +1,51 @@
+﻿@model EmailLoginVM
+
+<link rel="stylesheet" href="~/css/custom.css">
+
+<form asp-action="ApplicantLogin" asp-controller="Account" method="post" class="mt-2">
+
+    <h4 class="text-center">Email ile sorgulama</h4>
+
+    <div asp-validation-summary="All" style="text-align:center; class="form-group">
+        @if (ViewBag.Message != null)
+        {
+            @foreach (var item in ViewBag.Message)
+            {
+                <p class="text-danger">@item</p>
+                <br />
+            }
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Adınız</label>
+        <input type="text" id="Email" name="Name" class="form-control" placeholder="Adınız" required min="3" max="50">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="SirName">Soy Adınız</label>
+        <input type="text" id="SirName" name="SirName" class="form-control" placeholder="Soy Adınız" required min="3" max="75">
+        <span asp-validation-for="SirName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="BirthDate">Doğum Tarihiniz</label>
+        <input type="date" id="BirthDate" name="BirthDate" class="form-control" required>
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email Adresiniz</label>
+        <input type="text" id="Email" name="Email" class="form-control" placeholder="kullanıcı@@mail.com" required>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="text-center form-group">
+        <button type="submit" class="btn btn-outline-success">Gönder</button>
+    </div>
+
+    <div class="text-center form-group">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-outline-success text-dark">Ana Sayfa</a>
+    </div>
+</form>

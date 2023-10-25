@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+@model List<AdminListVM> // Model, AdminListVM tipinden bir liste olacak
+
+<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <h1 class="mdl-card__title-text">Yöneticiler</h1>
+        </div>
+        <div class="mdl-card__supporting-text no-padding">
+            <div style="overflow-x:auto;">
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table--responsive" style="white-space:nowrap; width: auto!important;">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">#</th>
+                            <th class="mdl-data-table__cell--non-numeric">Adı</th>
+                            <th class="mdl-data-table__cell--non-numeric">Doğum Tarihi</th>
+                            <th class="mdl-data-table__cell--non-numeric">İletişim</th>
+                            <th class="mdl-data-table__cell--non-numeric">Rütbe</th>
+                            <th class="mdl-data-table__cell--non-numeric">Davetçi İsmi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @if (@item.ProfilePhotoPath is null)
+                                    {
+                                        <img src="~/img/SiluetteUser.png" style="max-width:50px; border-radius:100%" />
+                                    }
+                                    else
+                                    {
+                                        <a href="@item.ProfilePhotoPath" target="_blank">
+                                            <img src="@item.ProfilePhotoPath" style="max-width:50px; border-radius:100%" />
+                                        </a>
+                                    }
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @item.FullName
+                                    <br>
+                                    Kullanıcı Adı : @item.UserName
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @item.BirthDate.ToString("dd.MM.yyyy")
+                                    <br>
+                                    Yaş: @item.Age
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    Email: <a href="mailto:@item.Email">@item.Email</a>
+                                    <br>
+                                    Telefon: @item.PhoneNumber
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @if (item.UserRank == CAWA.Domain.Enums.UserRank.Site_Officer)
+                                    {
+                                        <p>Süper Yönetici</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Yönetici</p>
+                                    }
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @item.inviterName
+                                    <br>
+                                    Örnek: www.website.com?invitername=@item.inviterName
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

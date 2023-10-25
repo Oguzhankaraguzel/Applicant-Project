@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model List<ApplicantInformationListVM>
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--file">
+        @if (ViewBag.ErrorMessages != null)
+        {
+            <ul>
+                @foreach (var errorMessage in ViewBag.ErrorMessages)
+                {
+                    <li>@errorMessage</li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+            <h1 class="mdl-card__title-text">Bekleyen Başvurular</h1>
+        </div>
+        <div class="mdl-card__supporting-text no-padding">
+            <div style="overflow-x:auto;">
+                <table class="mdl-data-table mdl-js-data-table mdl-data-table--responsive" style="width: auto!important;">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">#</th>
+                            <th class="mdl-data-table__cell--non-numeric">Resimler</th>
+                            <th class="mdl-data-table__cell--non-numeric">Adı</th>
+                            <th class="mdl-data-table__cell--non-numeric">Doğum Tarihi</th>
+                            <th class="mdl-data-table__cell--non-numeric">İletişim</th>
+                            <th class="mdl-data-table__cell--non-numeric">Detaylar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <i class="material-icons">arrow_forward</i>
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <a href="@item.FirstPhotoPath" target="_blank">
+                                        <img src="@item.FirstPhotoPath" style="max-width:100px;" />
+                                    </a>
+
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @item.FullName
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    @item.BirthDate.ToString("dd.MM.yyyy")
+                                    <br>
+                                    Yaş: @item.Age
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    Email: <a href="mailto:@item.Email">@item.Email</a>
+                                    <br>
+                                    Telefon: @item.PhoneNumber
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric" style="max-width: 70% !important">
+                                    <a asp-action="GetDetail" asp-route-Id="@item.Id">İncele <i class="material-icons">forward</i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
