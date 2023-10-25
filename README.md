@@ -7,7 +7,7 @@ Yaptığım ilk freelance projemin, sadece paylaşılmaya açık olan kısmını
 <h2>DİKKAT EDİLMESİ GEREKENLER</h2>
 Henüz geliştirme aşamasının temellerinde ki bu proje geliştirmeye oldukça açıktır. Ancak başlarda hızlı geliştirme ve test işlemlerinin kolay olması için sadece 2 servis sınıfı şişirilip kullanılmıştır. 
 <br/>
-Sisteme bir kere başvuru yapıldıktan sonra admi olarak girmek için account/alo aksiyonuna istek atmanız gerekmektedir. bu sayede session sıfırlanır. 
+Sisteme bir kere başvuru yapıldıktan sonra admin olarak girmek için account/alo aksiyonuna istek atmanız gerekmektedir. bu sayede session sıfırlanır. 
 <br/>
 Seed data içerisinde süper admin bilgileri bulunmaktadır.
 <br/>
@@ -20,7 +20,7 @@ Süper admin oluşturursanız, ancak veri tabanından bilgilerine ulaşabilirsin
 This is the draft of the only publicly accessible part of my first freelance project.
 <br/>
 <h2>THINGS TO PAY ATTENTION TO</h2>
-This project, in its early development stages, is quite open to further development. However, for the sake of quick development and easy testing in the initial stages, only 2 service classes have been inflated and used.
+This project, which is still in the foundations of the development phase, is very open to development. However, in the beginning, only 2 service classes were inflated and used in order to facilitate rapid development and testing.
 <br/>
 Once an application is made to the system, you need to request the action account/alo to log in as an admin. This will reset the session.
 <br/>
