@@ -1,10 +1,12 @@
 ﻿using CAWA.Application.Absractions.Services;
 using CAWA.Application.ViewModels.MailVM;
+using CAWA.MVCUI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CAWA.MVCUI.Controllers
 {
+    [TypeFilter(typeof(AdminInformationFilter))]
     [Authorize(Roles = "Admin, SuperAdmin")]
     public class MailController : Controller
     {
